@@ -105,8 +105,9 @@ function extractTermInfo(event: Event): TermInfo | null {
         .trim();
 
     // Get teacher from the last child element
-    const lastChild = moreInfo.children[moreInfo.children.length - 1];
-    const teacher = lastChild?.children[0]?.textContent?.trim() || "";
+    // const lastChild = moreInfo.children[moreInfo.children.length - 1];
+    // const teacher = lastChild?.children[0]?.textContent?.trim() || "";
+    const teacher = moreInfo.querySelector(".body_top")?.querySelector(".info")?.textContent?.trim() || "";
 
     const termInfo: TermInfo = {
         cathedra,

@@ -4,6 +4,7 @@ import { useState } from "react";
 import useTermsStore from "@/lib/stores/termsStore";
 import { extractUserName } from "@/lib/infoGrabber";
 import useUserStore from "@/lib/stores/userStore";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const Popup = () => {
     const [isActive, setIsActive] = useState(true);
@@ -46,16 +47,38 @@ const Popup = () => {
                     {/* <div>uživatel: {userName}</div> */}
                     <div className="popup-content mb-4">
                         {terms.length > 0 ? (
-                            <ul className="pl-5 space-y-2">
-                                {terms.map((term, index) => (
-                                    <li key={index} className="text-gray-700">
-                                        {term.cathedra}/{term.course} -{" "}
-                                        {term.day} {term.timeStart} -{" "}
-                                        {term.timeEnd} - {term.teacher} (
-                                        {term.type})
-                                    </li>
-                                ))}
-                            </ul>
+                            // <ul className="pl-5 space-y-2">
+                            //     {terms.map((term, index) => (
+                            //         <li key={index} className="text-gray-700">
+                            //             {term.cathedra}/{term.course} -{" "}
+                            //             {term.day} {term.timeStart} -{" "}
+                            //             {term.timeEnd} - {term.teacher} (
+                            //             {term.type})
+                            //         </li>
+                            //     ))}
+                            // </ul>
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Předmět</TableHead>
+                                        <TableHead>Den</TableHead>
+                                        <TableHead>Čas</TableHead>
+                                        <TableHead>Typ</TableHead>
+                                        <TableHead>Učitel</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {terms.map((term, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{term.cathedra}/{term.course}</TableCell>
+                                            <TableCell>{term.day}</TableCell>
+                                            <TableCell>{term.timeStart} - {term.timeEnd}</TableCell>
+                                            <TableCell>{term.type}</TableCell>
+                                            <TableCell>{term.teacher}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
                         ) : (
                             <p className="text-gray-500">
                                 Zatím nejsou vybrány žádné předměty
