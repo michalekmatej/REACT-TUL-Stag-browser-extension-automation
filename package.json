@@ -17,9 +17,16 @@
   },
   "type": "module",
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.483.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "webextension-polyfill": "^0.12.0"
+    "tailwind-merge": "^3.0.2",
+    "tw-animate-css": "^1.2.4",
+    "webextension-polyfill": "^0.12.0",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.32",
@@ -32,7 +39,7 @@
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.18.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.23.0",
+    "eslint": "^8.56.0",
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
