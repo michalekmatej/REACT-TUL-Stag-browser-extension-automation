@@ -1,4 +1,3 @@
-
 export interface Term {
     cathedra: string;
     course: string;
@@ -15,7 +14,7 @@ export interface Term {
     sectionTitle?: string;
 }
 
-export interface Subject {
+export interface Course {
     akce: string;
     cathedra: string;
     course: string;
@@ -30,13 +29,12 @@ export interface Subject {
     sectionTitle: string;
 }
 
-export interface OutputMessage {
+export interface ResponseMessage {
     type: string;
     time: string;
-    status: string;
+    status: ResponseStatus;
     message: string;
 }
-
 
 export interface ApiResponse {
     text(): Promise<string>;
@@ -66,3 +64,11 @@ export interface TermInfo extends CourseInfo {
 }
 
 export interface CombinedInfo extends SectionInfo, TermInfo {}
+
+export type Status = "idle" | "loading" | "success" | "error";
+export type ResponseStatus =
+    | "starting"
+    | "success"
+    | "error"
+    | "finished"
+    | "thanks";
