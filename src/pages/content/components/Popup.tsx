@@ -199,10 +199,12 @@ const Popup = () => {
                     <EnrollmentStatus status={status} />
 
                     {outputs.length > 0 && (
-                        <PopupOutput
-                            outputs={outputs}
-                            clearOutput={clearOutput}
-                        />
+                        <div className="w-full max-w-full">
+                            <PopupOutput
+                                outputs={outputs}
+                                clearOutput={clearOutput}
+                            />
+                        </div>
                     )}
                 </div>
             )}

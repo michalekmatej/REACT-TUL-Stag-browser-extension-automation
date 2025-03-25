@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { ResponseMessage } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 
 interface PopupOutputProps {
@@ -8,9 +13,9 @@ interface PopupOutputProps {
     clearOutput: () => void;
 }
 
-const PopupOutput = ({outputs, clearOutput}: PopupOutputProps) => {
+const PopupOutput = ({ outputs, clearOutput }: PopupOutputProps) => {
     return (
-        <div className="popup-output relative bg-muted p-2 rounded">
+        <div className="popup-output relative bg-muted p-2 rounded w-full">
             <Tooltip delayDuration={500}>
                 <TooltipTrigger asChild>
                     <Button
@@ -26,20 +31,25 @@ const PopupOutput = ({outputs, clearOutput}: PopupOutputProps) => {
                     <p className="text-xs">Vymazat výstup</p>
                 </TooltipContent>
             </Tooltip>
-            <ul className="popup-output-field text-[11px]">
-                {outputs.map((output, index) => (
-                    <li
-                        key={index}
-                        className={`${
-                            output.status === "error"
-                                ? "text-red-500"
-                                : "text-green-500"
-                        }`}
-                    >
-                        {output.time} - {output.message}
-                    </li>
-                ))}
-            </ul>
+            <div
+                className="w-full overflow-x-auto"
+                style={{ maxWidth: "100%" }}
+            >
+                <ul className="popup-output-field text-[11px]">
+                    {outputs.map((output, index) => (
+                        <li
+                            key={index}
+                            className={cn(
+                                "whitespace-nowrap",
+                                output.status === "error" && "text-red-500",
+                                output.status === "success" && "text-green-500"
+                            )}
+                        >
+                            {output.time} - {output.message}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
