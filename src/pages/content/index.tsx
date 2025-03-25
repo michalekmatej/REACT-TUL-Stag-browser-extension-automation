@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import Content from "./Content";
 import "@assets/styles/tailwind.css";
-import { handleInfoGrabbing } from "@/lib/infoGrabber";
+import { handleInfoGrabbing, saveUserName } from "@/lib/infoGrabber";
 
 const div = document.createElement("div");
 div.id = "__root";
@@ -19,4 +19,6 @@ try {
 }
 
 document.addEventListener('click', handleInfoGrabbing);
+window.addEventListener('load', saveUserName);
+saveUserName();
 

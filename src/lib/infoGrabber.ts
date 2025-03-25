@@ -1,4 +1,5 @@
-import useTermsStore from "@/lib/termsStore";
+import useTermsStore from "@/lib/stores/termsStore";
+import useUserStore from "@/lib/stores/userStore";
 import { CombinedInfo, SectionInfo, TermInfo } from "@/lib/types";
 import { parseTitle, removeNewlinesAndTabs } from "@/lib/utils";
 
@@ -150,7 +151,7 @@ function updateTermsStore(info: CombinedInfo): void {
 // Track current section and term information
 let sectionInfo: SectionInfo = { sectionTitle: "", sectionId: "" };
 
-function handleInfoGrabbing(event: MouseEvent): void {
+export function handleInfoGrabbing(event: MouseEvent): void {
     const target = event.target as HTMLElement;
 
     // Try to extract section information
@@ -182,4 +183,19 @@ function handleInfoGrabbing(event: MouseEvent): void {
     console.groupEnd();
 }
 
-export { handleInfoGrabbing };
+export function extractUserName() {
+    const element = document.querySelector(
+        ".app_header > .app_header_right .falseLink.hideForMobile > span"
+    );
+    if (!element) return null;
+    const userName = element.textContent?.trim();
+    return userName;
+}
+
+export function saveUserName() {
+    const { setUserName } = useUserStore.getState();
+
+    const userName = extractUserName();
+    if (!userName) return;
+    setUserName(userName);
+}

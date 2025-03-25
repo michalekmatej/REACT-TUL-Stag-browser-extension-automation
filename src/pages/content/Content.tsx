@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import useTermsStore from "@/lib/termsStore";
+import useTermsStore from "@/lib/stores/termsStore";
 import Popup from "@/pages/content/components/Popup";
 
 const Content = () => {

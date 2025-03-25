@@ -1,12 +1,15 @@
 import { OutputMessage } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import useTermsStore from "@/lib/termsStore";
+import useTermsStore from "@/lib/stores/termsStore";
+import { extractUserName } from "@/lib/infoGrabber";
+import useUserStore from "@/lib/stores/userStore";
 
 const Popup = () => {
     const [isActive, setIsActive] = useState(true);
     const [outputs, setOutputs] = useState<OutputMessage[]>([]);
     const { terms, removeAllTerms } = useTermsStore();
+    // const { userName } = useUserStore();
 
     const enroll = () => {
         console.log("Potvrzeno");
@@ -40,6 +43,7 @@ const Popup = () => {
                     <div className="text-xl font-bold mb-4 border-b pb-2">
                         Vybrané termíny předmětů
                     </div>
+                    {/* <div>uživatel: {userName}</div> */}
                     <div className="popup-content mb-4">
                         {terms.length > 0 ? (
                             <ul className="pl-5 space-y-2">
