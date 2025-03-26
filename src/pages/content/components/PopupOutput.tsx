@@ -19,7 +19,7 @@ const PopupOutput = ({ outputs, clearOutput }: PopupOutputProps) => {
             <Tooltip delayDuration={500}>
                 <TooltipTrigger asChild>
                     <Button
-                        className="absolute top-0.5 right-0.5 z-10"
+                        className="absolute top-0.5 right-0.5 z-10 hover:bg-transparent"
                         size="sm"
                         variant="ghost"
                         onClick={clearOutput}
@@ -27,7 +27,7 @@ const PopupOutput = ({ outputs, clearOutput }: PopupOutputProps) => {
                         <X />
                     </Button>
                 </TooltipTrigger>
-                <TooltipContent side="bottom">
+                <TooltipContent side="bottom" className="bg-red-500 fill-red-500 text-white">
                     <p className="text-xs">Vymazat výstup</p>
                 </TooltipContent>
             </Tooltip>
@@ -37,9 +37,10 @@ const PopupOutput = ({ outputs, clearOutput }: PopupOutputProps) => {
                     <li
                         key={index}
                         className={cn(
-                            "whitespace-nowrap",
+                            "whitespace-nowrap rounded-xs px-1 w-fit",
                             output.status === "error" && "text-red-500",
-                            output.status === "success" && "text-green-500"
+                            output.status === "success" && "text-green-500",
+                            output.status === "finished" && "bg-green-600 text-white"
                         )}
                     >
                         {new Date(output.time).toLocaleDateString("cs-CZ")} -{" "}

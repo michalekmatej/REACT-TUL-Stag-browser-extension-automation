@@ -66,7 +66,7 @@ const Popup = () => {
         <div className="fixed top-2 right-2 min-w-[380px] max-w-[600px] w-auto flex flex-col items-end z-9999">
             {/* Trigger Button */}
             <Button
-                className="mb-2 hover:brightness-90 hover:bg-primary"
+                className="mb-2 text-background hover:brightness-90 hover:bg-primary"
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {isOpen ? "Zavřít popup" : "Otevřít popup"}
@@ -89,10 +89,10 @@ const Popup = () => {
                         )}
                     </div>
                     <div className="popup-buttons flex gap-2 justify-between">
-                        <Button onClick={enroll} disabled={status == "loading"}>
+                        <Button className="text-background" onClick={enroll} disabled={status == "loading"}>
                             Provést zápis
                         </Button>
-                        <Button variant="destructive" onClick={deleteAll}>
+                        <Button className="text-background" variant="destructive" onClick={deleteAll}>
                             Odstranit vše
                         </Button>
                     </div>

@@ -77,7 +77,7 @@ const PopupTable = ({ terms, removeTerm }: PopupTableProps) => {
                                         <Trash2 />
                                     </Button>
                                 </TooltipTrigger>
-                                <TooltipContent side="bottom">
+                                <TooltipContent side="bottom" className="bg-red-500 fill-red-500 text-white">
                                     <p className="text-xs">Odebrat termín</p>
                                 </TooltipContent>
                             </Tooltip>
