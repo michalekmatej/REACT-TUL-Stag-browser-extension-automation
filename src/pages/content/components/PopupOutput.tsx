@@ -15,11 +15,11 @@ interface PopupOutputProps {
 
 const PopupOutput = ({ outputs, clearOutput }: PopupOutputProps) => {
     return (
-        <div className="popup-output relative bg-muted p-2 rounded w-full">
+        <div className="popup-output relative bg-muted rounded w-full">
             <Tooltip delayDuration={500}>
                 <TooltipTrigger asChild>
                     <Button
-                        className="absolute top-0.5 right-0.5"
+                        className="absolute top-0.5 right-0.5 z-10"
                         size="sm"
                         variant="ghost"
                         onClick={clearOutput}
@@ -31,25 +31,29 @@ const PopupOutput = ({ outputs, clearOutput }: PopupOutputProps) => {
                     <p className="text-xs">Vymazat výstup</p>
                 </TooltipContent>
             </Tooltip>
-            <div
-                className="w-full overflow-x-auto"
-                style={{ maxWidth: "100%" }}
-            >
-                <ul className="popup-output-field text-[11px]">
-                    {outputs.map((output, index) => (
-                        <li
-                            key={index}
-                            className={cn(
-                                "whitespace-nowrap",
-                                output.status === "error" && "text-red-500",
-                                output.status === "success" && "text-green-500"
-                            )}
-                        >
-                            {output.time} - {output.message}
-                        </li>
-                    ))}
-                </ul>
-            </div>
+
+            <ul className="popup-output-field text-[11px] p-2 absolute overflow-auto w-full max-h-[300px]">
+                {outputs.map((output, index) => (
+                    <li
+                        key={index}
+                        className={cn(
+                            "whitespace-nowrap",
+                            output.status === "error" && "text-red-500",
+                            output.status === "success" && "text-green-500"
+                        )}
+                    >
+                        {new Date(output.time).toLocaleDateString("cs-CZ")} -{" "}
+                        {output.message}
+                    </li>
+                ))}
+            </ul>
+            {/* invisible ul for relative height */}
+            <ul className="popup-output-field opacity-0 p-2 text-transparent text-[11px] max-h-[300px] pointer-events-none">
+                {outputs.map((output, index) => (
+                    <li key={index}>.</li>
+                ))}
+            </ul>
+
         </div>
     );
 };

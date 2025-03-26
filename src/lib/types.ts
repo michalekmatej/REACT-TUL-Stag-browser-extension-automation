@@ -31,7 +31,7 @@ export interface Course {
 
 export interface ResponseMessage {
     type: string;
-    time: string;
+    time: number; // timestamp
     status: ResponseStatus;
     message: string;
 }

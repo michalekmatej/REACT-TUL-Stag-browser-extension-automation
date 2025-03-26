@@ -19,6 +19,7 @@ import {
 import PopupOutput from "@/pages/content/components/PopupOutput";
 import { cn } from "@/lib/utils";
 import EnrollmentStatus from "@/pages/content/components/EnrolmentStatus";
+import PopupTable from "@/pages/content/components/PopupTable";
 
 const Popup = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -27,12 +28,9 @@ const Popup = () => {
     const [status, setStatus] = useState<Status>("idle");
 
     useEffect(() => {
-        const handleWritingMessage = async function (
-            message: ResponseMessage,
-            sender: chrome.runtime.MessageSender,
-            sendResponse: (response?: any) => void
-        ) {
+        const handleWritingMessage = async function (message: any) {
             if (message.type != "WRITING") return;
+            message = message as ResponseMessage;
             console.log(message);
 
             setOutputs((prev) => [...prev, message]);
@@ -48,19 +46,6 @@ const Popup = () => {
     }, []);
 
     const enroll = () => {
-        // setStatus("loading");
-        // setTimeout(() => {
-        //     setStatus("success");
-        //     setOutputs([
-        //         {
-        //             type: "success",
-        //             time: new Date().toLocaleTimeString(),
-        //             status: "success",
-        //             message: "Zápis proběhl úspěšně",
-        //         },
-        //     ]);
-        // }, 2000);
-
         setStatus("loading");
         chrome.runtime.sendMessage({
             type: "SEND_TERMS",
@@ -96,91 +81,7 @@ const Popup = () => {
                     {/* <div>uživatel: {userName}</div> */}
                     <div className="popup-table">
                         {terms.length > 0 ? (
-                            <Table className="text-xs">
-                                <TableHeader className="bg-muted">
-                                    <TableRow>
-                                        <TableHead className="text-muted-foreground">
-                                            Předmět
-                                        </TableHead>
-                                        <TableHead className="text-muted-foreground">
-                                            Den
-                                        </TableHead>
-                                        <TableHead className="text-muted-foreground">
-                                            Čas
-                                        </TableHead>
-                                        <TableHead className="text-muted-foreground">
-                                            Typ
-                                        </TableHead>
-                                        <TableHead className="text-muted-foreground">
-                                            Učitel
-                                        </TableHead>
-                                        <TableHead></TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {terms.map((term, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell className="py-1">
-                                                {term.cathedra}/
-                                                <span className="font-bold">
-                                                    {term.course}
-                                                </span>
-                                            </TableCell>
-                                            <TableCell className="py-1">
-                                                {term.day}
-                                            </TableCell>
-                                            <TableCell className="py-1">
-                                                {term.timeStart} -{" "}
-                                                {term.timeEnd}
-                                            </TableCell>
-                                            <TableCell className="py-0">
-                                                <div
-                                                    className={cn(
-                                                        "py-1 px-2 rounded-full text-center",
-                                                        term.type.toLowerCase() ==
-                                                            "cv" &&
-                                                            "bg-red-200",
-                                                        term.type.toLowerCase() ==
-                                                            "př" &&
-                                                            "bg-green-200",
-                                                        term.type.toLowerCase() ==
-                                                            "se" &&
-                                                            "bg-blue-200"
-                                                    )}
-                                                >
-                                                    {term.type}
-                                                </div>
-                                            </TableCell>
-                                            <TableCell className="py-1">
-                                                {term.teacher}
-                                            </TableCell>
-                                            <TableCell className="p-0">
-                                                <Tooltip delayDuration={500}>
-                                                    <TooltipTrigger asChild>
-                                                        <Button
-                                                            size="sm"
-                                                            variant="ghost"
-                                                            className="hover:text-destructive"
-                                                            onClick={() =>
-                                                                removeTerm(
-                                                                    term.id
-                                                                )
-                                                            }
-                                                        >
-                                                            <Trash2 />
-                                                        </Button>
-                                                    </TooltipTrigger>
-                                                    <TooltipContent side="bottom">
-                                                        <p className="text-xs">
-                                                            Odebrat termín
-                                                        </p>
-                                                    </TooltipContent>
-                                                </Tooltip>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
+                            <PopupTable terms={terms} removeTerm={removeTerm} />
                         ) : (
                             <p className="text-muted-foreground">
                                 Zatím nejsou vybrány žádné předměty
@@ -196,15 +97,13 @@ const Popup = () => {
                         </Button>
                     </div>
 
-                    <EnrollmentStatus status={status} />
+                    {/* <EnrollmentStatus status={status} /> */}
 
                     {outputs.length > 0 && (
-                        <div className="w-full max-w-full">
-                            <PopupOutput
-                                outputs={outputs}
-                                clearOutput={clearOutput}
-                            />
-                        </div>
+                        <PopupOutput
+                            outputs={outputs}
+                            clearOutput={clearOutput}
+                        />
                     )}
                 </div>
             )}

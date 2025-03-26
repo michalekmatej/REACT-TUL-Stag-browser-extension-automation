@@ -1,5 +1,5 @@
 import API from "@/lib/api";
-import { ResponseStatus } from "@/lib/types";
+import { ResponseMessage, ResponseStatus } from "@/lib/types";
 import { termsToSubjects } from "@/lib/utils";
 
 console.log("background script loaded");
@@ -8,15 +8,15 @@ type MessageType = "SEND_TERMS" | "WRITING";
 
 const sendOutput = (message: string, status: ResponseStatus) => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id!, {
+        const responseMessage: ResponseMessage = {
             type: "WRITING",
-            time: new Date().toLocaleTimeString("cs-CZ"),
+            time: new Date().getTime(),
             status,
             message,
-        });
+        };
+        chrome.tabs.sendMessage(tabs[0].id!, responseMessage);
     });
 };
-
 
 // Základní background script pro případné rozšíření funkcionality
 chrome.runtime.onInstalled.addListener(() => {
